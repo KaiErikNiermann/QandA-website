@@ -2,6 +2,8 @@ import { questions } from "../db/questions";
 import { client } from "../db/mongo";
 
 export async function load() {
+    console.log("Loading questions...");
+
     const data = await questions
         .find(
             {},
@@ -25,16 +27,22 @@ export const actions: import("./$types").Actions = {
         const answer = data.get("answer");
 
         console.log("Adding answer to question: " + data.get("question"));
-        client
+        await client
             .db("main_db")
             .collection("QandA_collection")
-            .updateOne({
-                question: data.get("question"),
-            },
-            {
-                $set: {
-                    answer: answer,
+            .updateOne(
+                {
+                    question: data.get("question"),
+                },
+                {
+                    $set: {
+                        answer: answer,
+                    },
                 }
+            ).then(() => {
+                console.log("Answer added!");
+            }).catch((err) => {
+                console.log(err);
             });
     },
 };

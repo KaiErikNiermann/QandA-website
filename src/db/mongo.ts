@@ -7,3 +7,4 @@ export function start_mongo() {
     console.log("Connecting to MongoDB...");
     return client.connect();
 }
+
