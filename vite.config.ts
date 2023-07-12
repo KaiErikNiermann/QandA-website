@@ -16,6 +16,14 @@ export default defineConfig({
 				createWSSGlobalInstance();
 				server.httpServer?.on('upgrade', onHttpServerUpgrade);
 			}
-		},
-	]
+		}
+	],
+
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: '@use "src/variables.scss" as *;'
+			}
+		}
+	}
 });
