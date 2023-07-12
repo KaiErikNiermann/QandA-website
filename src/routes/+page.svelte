@@ -1,38 +1,51 @@
 <script lang="ts">
-    import { enhance } from "$app/forms";
-    import { page } from "$app/stores";
+	import { onMount } from "svelte";
 
-    let curr_guild_id: string;
+  let webSocketEstablished = false;
+  let ws: WebSocket | null = null;
+  let log: string[] = [];
+
+  const logEvent = (str: string) => {
+    log = [...log, str];
+  };
+
+  const establishWebSocket = () => {
+    if (webSocketEstablished) return;
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    ws = new WebSocket(`${protocol}//${window.location.host}/websocket`);
+    ws.addEventListener('open', event => {
+      webSocketEstablished = true;
+      console.log('[websocket] connection open', event);
+      logEvent('[websocket] connection open');
+    });
+    ws.addEventListener('close', event => {
+      console.log('[websocket] connection closed', event);
+      logEvent('[websocket] connection closed');
+    });
+    ws.addEventListener('message', event => {
+      console.log('[websocket] message received', event);
+      logEvent(`[websocket] message received: ${event.data}`);
+    });
+  };
+
+  onMount(() => {
+    establishWebSocket();
+  });
+
 </script>
 
-<h1>FaQ page</h1>
-
-<input bind:value={curr_guild_id} />
-<ul>
-    {#each $page.data.questions as question}
-        {#if question.guild_id == curr_guild_id}
-            <li>
-                <h3>
-                    Q:
-                    {question.question}
-                </h3>
-                <h3>
-                    A:
-                    {question.answer}
-                </h3>
-                <form method="POST" action="?/add_answer" use:enhance>
-                    <label>
-                        your answer:
-                        <input name="answer" />
-                        <input
-                            type="hidden"
-                            name="question"
-                            value={question.question}
-                        />
-                    </label>
-                    <button type="submit">Submit</button>
-                </form>
-            </li>
-        {/if}
+<main>
+  <h1>SvelteKit with WebSocket Integration</h1>
+  
+  <ul>
+    {#each log as event}
+      <li>{event}</li>
     {/each}
-</ul>
+  </ul>
+</main>
+
+<style>
+  main {
+    font-family: sans-serif;
+  }
+</style>

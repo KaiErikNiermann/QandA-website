@@ -3,7 +3,9 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			wss?: ExtendedWebSocketServer;
+		}
 		// interface PageData {}
 		// interface Platform {}
 	}
