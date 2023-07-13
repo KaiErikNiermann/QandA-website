@@ -17,6 +17,7 @@ connect()
 
 // Initialize WebSocket server
 let wssInitialized = false;
+
 const startupWebsocketServer = () => {
 	if (wssInitialized) return;
 
