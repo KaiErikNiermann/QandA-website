@@ -2,5 +2,11 @@
 @import "../node_modules/inter-ui/inter.css";
 
 * {
+    background-color: white;
     font-family: 'Inter', sans-serif;
+}
+
+input {
+    border: 1px solid #ccc;
+    border-radius: 7px;
 }

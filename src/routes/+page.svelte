@@ -57,8 +57,9 @@
 		{/each}
 	</ul>
 
-	<input bind:value={guildId} />
-	<ul>
+	Server guild id
+	<input bind:value={guildId} id="guild_id_input"/>
+	<ul id="main_list">
 		{#each data.questions as question}
 			{#if question.guild_id === guildId}
 				<li>
@@ -68,7 +69,7 @@
 
 				<form method="POST" action="?/add_answer" use:enhance>
 					<label>
-						your answer:
+						your answer
 						<input name="answer" />
 						<input type="hidden" name="question" value={question.question} />
 					</label>
@@ -79,8 +80,47 @@
 	</ul>
 </main>
 
-<style>
+<style lang="scss">
 	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		font-family: sans-serif;
+	}
+
+	input#guild_id_input {
+		width: 200px; 	
+		height: 20px;
+		padding: 5px 10px;
+		font-weight: 500;
+	}
+
+	input {
+		width: 200px; 	
+		height: 20px;
+		margin: 5px;
+	}
+
+	ul#main_list {
+		list-style-type: none;
+		padding: 0;
+	}
+
+	form, label {
+		display: flex; 
+		align-items: center;
+		flex-direction: column;
+	}
+
+	button[type="submit"] {
+		margin-top: 10px;
+		border-radius: 7px;
+		border: 1px solid #9e9e9e;
+		width: 75px;
+		height: 25px;
+
+		&:hover {
+			background-color: #e6e6e6;
+		}
 	}
 </style>
