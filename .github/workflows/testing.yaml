@@ -24,5 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci  
 
+      - name: Set env
+        env: 
+          DB_URI: ${{ secrets.DB_URI }}
+
       - name: Build and run
         run: npm run test
