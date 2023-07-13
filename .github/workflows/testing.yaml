@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci  
 
+      - name: Setup playwright
+        run: npx playwright install
+
       - name: Setup environment variables
         run: | 
           touch .env
