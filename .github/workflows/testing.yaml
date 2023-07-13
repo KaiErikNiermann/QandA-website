@@ -27,7 +27,7 @@ jobs:
       - name: Setup environment variables
         run: | 
           touch .env
-          echo ${{ secrets.DB_HOST }} >> .env
+          echo DB_URI=${{ secrets.DB_URI }} >> .env
 
       - name: Build and run
         run: npm run test
