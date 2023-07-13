@@ -22,10 +22,10 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        uses: actions/checkout@v2
         run: npm ci  
 
       - name: Set env
+        uses: actions/setup-node@v2
         env: 
           DB_URI: ${{ secrets.DB_URI }}
 
