@@ -51,7 +51,7 @@
 <main>
 	<button on:click={() => requestData()}> Request Data from GET endpoint </button>
 
-	<ul>
+	<ul class='event_list'>
 		{#each log as event}
 			<li>{event}</li>
 		{/each}
