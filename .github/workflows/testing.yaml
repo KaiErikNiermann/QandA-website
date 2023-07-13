@@ -24,10 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm ci  
 
-      - name: Set env
-        uses: actions/setup-node@v2
-        env: 
-          DB_URI: ${{ secrets.DB_URI }}
+      - name: Setup environment variables
+        run: | 
+          touch .env
+          echo ${{ secrets.DB_HOST }} >> .env
 
       - name: Build and run
         run: npm run test
