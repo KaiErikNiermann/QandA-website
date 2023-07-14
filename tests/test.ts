@@ -12,7 +12,6 @@ test('verify the WebSocket connection', async ({ page }) => {
 	// get ul element which has a specific class 
 	const logElement = await page.locator('ul.event_list');
 	const logHtml = await logElement.innerHTML();
-	// console.log('Log HTML', logHtml);
 	expect(logHtml).toContain('[websocket] connection open');
 	expect(logHtml).toContain('[websocket] message received:');
 	expect(logHtml).toContain('[websocket] message received: Hello from the GET handler');
