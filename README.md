@@ -8,6 +8,9 @@ This is a frontend to users who want to answer questions which discord users ask
 
 Currently this is still in very early development and likely very buggy, if you wish to contribute feel free to but I do not advise trying to host this yourself.
 
+- Real-time updates and interactions
+- Minimal UI which renders questions and answers
+
 ## References
 
 Credit to [_suhaildawood_](https://github.com/suhaildawood) for [their implementation](https://github.com/suhaildawood/SvelteKit-integrated-WebSocket) of first-class support for web sockets.
