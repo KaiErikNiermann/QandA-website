@@ -1,28 +1,56 @@
 <script>
     import { enhance } from "$app/forms";
+    import Fa from 'svelte-fa/src/fa.svelte'
+    import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
+
+    let active = false;
+
+    $: type = active ? 'text' : 'password';
+
+    function set_visibility() {
+        active = !active;
+        
+    }
 
     export let form;
 </script>
 
-<form method="POST" action="?/login" use:enhance>
-    <input type="text" name="username" placeholder="Username" required/>
-    <!-- <input type="email" name="email" placeholder="Email" required/> -->
-    <input type="password" name="password" placeholder="Password" required/>
-    <input type="password" name="password2" placeholder="Repeat Password" required/>
-    <button type="submit">Login</button>
-    <button type="submit" formaction="?/register">Register</button>
-</form>
+<main>
+    <form method="POST" action="?/login" use:enhance>
+        <input type="text" name="username" placeholder="Username" />
+        <!-- <input type="email" name="email" placeholder="Email" /> -->
+        <label for="password" class="password-label">
+            <input { type } name="password" placeholder="Password" />
+            <button type="button" class="visbility-btn" on:click="{() => active = !active}">
+                <Fa icon={active ? faEyeSlash : faEye } size="1.2x" color="#ccc"/>
+            </button>
+        </label>
+        <div id="button-sec">
+            <button type="submit">Login</button>
+            <button type="submit" formaction="?/register">Register</button>
+        </div>
+    </form>
+</main>
 
 <style>
-    form {
+    main {
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: right;
     }
 
     input {
         margin: 0.5rem;
         padding: 0.5rem;
+        width: fit-content;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
     }
@@ -30,7 +58,21 @@
     button {
         margin: 0.5rem;
         padding: 0.5rem;
+        width: fit-content;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
+    }
+
+    #button-sec {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-right: 3rem;
+    }
+
+    .visbility-btn {
+        border: none;
+        width: 40px;
     }
 </style>
