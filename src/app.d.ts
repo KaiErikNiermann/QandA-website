@@ -21,6 +21,12 @@ declare global {
 			channel_id: string;
 			message_id: string;
 		}
+
+		interface FieldError {
+			field: string | number;
+			message: string;
+			data: FormDataEntryValue;
+		}
 	}
 }
 
