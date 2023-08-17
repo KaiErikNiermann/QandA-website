@@ -11,7 +11,10 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
-		"prod": "PORT=3005 tsm ./prodServer.ts"
+		"prod": "PORT=3005 tsm ./prodServer.ts",
+		"postinstall": "prisma generate",
+		"prisma:push": "prisma db push",
+		"prisma:generate": "prisma generate"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -26,6 +29,7 @@
 		"eslint-plugin-svelte": "^2.30.0",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.10.1",
+		"prisma": "^5.1.1",
 		"sass": "^1.63.6",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
@@ -38,12 +42,16 @@
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^6.4.2",
 		"@lucia-auth/adapter-mongoose": "^3.0.0",
+		"@lucia-auth/adapter-prisma": "^3.0.1",
+		"@prisma/client": "^5.1.1",
 		"@sveltejs/adapter-node": "^1.3.1",
 		"@syncedstore/core": "^0.5.1",
 		"@syncedstore/svelte": "^0.5.1",
 		"http": "^0.0.1-security",
 		"inter-ui": "^3.19.3",
 		"lucia": "^2.3.0",
+		"lucia-auth": "^1.8.0",
+		"lucia-sveltekit": "^0.14.3",
 		"mongodb": "^5.7.0",
 		"nanoid": "^4.0.2",
 		"stream": "^0.0.2",

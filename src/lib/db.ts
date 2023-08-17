@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
-import { DB_URI } from "$env/static/private";
+import { DATABASE_URL } from "$env/static/private";
 
-export const client = new MongoClient(DB_URI);
+export const client = new MongoClient(DATABASE_URL);
 
 export async function connect() {
     console.log("Connecting to database...");

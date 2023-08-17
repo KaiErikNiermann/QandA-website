@@ -1,89 +1,87 @@
 <script lang="ts">
-    import { enhance } from "$app/forms";
-    import Fa from 'svelte-fa/src/fa.svelte'
-    import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
+	import { enhance } from '$app/forms';
+	import Fa from 'svelte-fa/src/fa.svelte';
+	import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 
-    let active = false;
+	let active = false;
 
-    $: type = active ? 'text' : 'password';
+	$: type = active ? 'text' : 'password';
 
-    export let form;
-    console.log(form);
+	export let form;
+	console.log(form);
 </script>
 
 {#if form?.success}
-    <p>logged in!</p>
-    
+	<p>logged in!</p>
 {:else}
-    <main>
-    <div id="error-sec">
-        {#if form?.errors}
-            {#each form.errors as error}
-            <p>
-                {error.field}: {error.message}
-                </p>    
-            {/each}
-            {/if}
-    </div>
-    <form method="POST" action="?/login" use:enhance>
-        <input type="text" name="username" placeholder="Username"/>
-        <input type="email" name="email" placeholder="Email"/>
-        <label for="password" class="password-label">
-            <input { type } name="password" placeholder="Password"/>
-            <button type="button" class="visbility-btn" on:click="{() => active = !active}">
-                <Fa icon={active ? faEyeSlash : faEye } size="1.2x" color="#ccc"/>
-            </button>
-        </label>
-        <div id="button-sec">
-            <button type="submit">Login</button>
-            <button type="submit" formaction="?/register">Register</button>
-        </div>
-    </form>
-</main>
-
+	<main>
+		<div id="error-sec">
+			{#if form?.errors}
+				{#each form.errors as error}
+					<p>
+						{error.field}: {error.message}
+					</p>
+				{/each}
+			{/if}
+		</div>
+		<form method="POST" action="?/login" use:enhance>
+			<input type="text" name="username" placeholder="Username" />
+			<input type="email" name="email" placeholder="Email" />
+			<label for="password" class="password-label">
+				<input {type} name="password" placeholder="Password" />
+				<button type="button" class="visbility-btn" on:click={() => (active = !active)}>
+					<Fa icon={active ? faEyeSlash : faEye} size="1.2x" color="#ccc" />
+				</button>
+			</label>
+			<div id="button-sec">
+				<button type="submit">Login</button>
+				<button type="submit" formaction="?/register">Register</button>
+			</div>
+		</form>
+	</main>
 {/if}
 
 <style>
-    main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-    }
-    
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: right;
-    }
+	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+	}
 
-    input {
-        margin: 0.5rem;
-        padding: 0.5rem;
-        width: fit-content;
-        border: 1px solid #ccc;
-        border-radius: 0.5rem;
-    }
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: right;
+	}
 
-    button {
-        margin: 0.5rem;
-        padding: 0.5rem;
-        width: fit-content;
-        border: 1px solid #ccc;
-        border-radius: 0.5rem;
-    }
+	input {
+		margin: 0.5rem;
+		padding: 0.5rem;
+		width: fit-content;
+		border: 1px solid #ccc;
+		border-radius: 0.5rem;
+	}
 
-    #button-sec {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding-right: 3rem;
-    }
+	button {
+		margin: 0.5rem;
+		padding: 0.5rem;
+		width: fit-content;
+		border: 1px solid #ccc;
+		border-radius: 0.5rem;
+	}
 
-    .visbility-btn {
-        border: none;
-        width: 40px;
-    }
+	#button-sec {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding-right: 3rem;
+	}
+
+	.visbility-btn {
+		border: none;
+		width: 40px;
+	}
 </style>
