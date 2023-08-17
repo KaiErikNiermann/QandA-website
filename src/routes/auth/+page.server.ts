@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { auth } from '$lib/server/lucia';
 
 const userSchema = z.object({
@@ -9,7 +9,7 @@ const userSchema = z.object({
 });
 
 export const actions: import('./$types').Actions = {
-	register: async ({ request: request }) => {
+	register: async ({ request: request, locals: locals }) => {
 		const data = await request.formData();
 		const authobj =  {
 			username: data.get('username') ?? '' as string,
@@ -47,10 +47,17 @@ export const actions: import('./$types').Actions = {
 
 				},
 				attributes: {
-					authobj.username
+					username: authobj.username.toString(),
+					email: authobj.email.toString()
 				}
-			})
+			});
 
+			const session = await auth.createSession({
+				userId: user.userId, 
+				attributes: {}
+			});
+			
+			locals.auth.setSession(session);
             return { success : true }
 		}
 	},
