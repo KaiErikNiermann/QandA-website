@@ -6,6 +6,7 @@ declare global {
 		
 		interface Locals {
 			wss?: ExtendedWebSocketServer;
+			auth: import('lucia').AuthRequest;
 		}
 		
 		// interface PageData {}
@@ -28,6 +29,17 @@ declare global {
 		}
 	}
 	var prisma: PrismaClient;
+}
+
+declare global {
+	namespace Lucia {
+		type Auth = import('$lib/server/lucia').Auth;
+		type DatabaseUserAttributes = {
+			username: string; 
+			email: string; 
+		}
+		type DatabaseSessionAttributes = Record<string, never>;
+	}
 }
 
 export {};

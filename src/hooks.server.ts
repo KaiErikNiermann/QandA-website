@@ -6,6 +6,8 @@ import { client } from '$lib/db';
 import type { Handle } from '@sveltejs/kit';
 import type { ExtendedGlobal } from '$lib/server/webSocketUtils';
 
+import { auth } from '$lib/server/lucia';
+
 // Connect to the database
 connect()
 	.then(() => {
@@ -44,7 +46,7 @@ const startupWebsocketServer = () => {
 	}
 };
 
-// Handle WebSocket connections
+// Handle WebSocket connections and auth
 export const handle = (async ({ event, resolve }) => {
 	startupWebsocketServer();
 	// Skip WebSocket server when pre-rendering pages
@@ -54,8 +56,10 @@ export const handle = (async ({ event, resolve }) => {
 			event.locals.wss = wss;
 		}
 	}
-	const response = await resolve(event, {
+
+	event.locals.auth = auth.handleRequest(event);
+
+	return await resolve(event, {
 		filterSerializedResponseHeaders: (name) => name === 'content-type'
-	});
-	return response;
+	});;
 }) satisfies Handle;

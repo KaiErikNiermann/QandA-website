@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { fail } from '@sveltejs/kit';
+import { auth } from '$lib/server/lucia';
 
 const userSchema = z.object({
 	username: z.string().min(3).max(20),
@@ -10,14 +11,14 @@ const userSchema = z.object({
 export const actions: import('./$types').Actions = {
 	register: async ({ request: request }) => {
 		const data = await request.formData();
-		const auth_obj =  {
+		const authobj =  {
 			username: data.get('username') ?? '' as string,
 			email: data.get('email') ?? '' as string,
 			password: data.get('password') ?? '' as string
 		};
 
 		// Validate data
-		const userdata = userSchema.safeParse(auth_obj);
+		const userdata = userSchema.safeParse(authobj);
 
 		if (!userdata.success) {
 			console.log('Invalid register data!');
@@ -26,7 +27,7 @@ export const actions: import('./$types').Actions = {
                 return { 
                     field: issue.path[0], 
                     message: issue.message,
-                    data: auth_obj[issue.path[0] as keyof typeof auth_obj] 
+                    data: authobj[issue.path[0] as keyof typeof authobj] 
                 };
             });
 
@@ -37,6 +38,19 @@ export const actions: import('./$types').Actions = {
 			console.log('Valid register data!');
 			// Check username availability
 
+			// Create user 
+			const user = await auth.createUser({
+				key: {
+					providerId: 'username',
+					providerUserId: authobj.username.toString().toLowerCase(),
+					password: authobj.password.toString()
+
+				},
+				attributes: {
+					authobj.username
+				}
+			})
+
             return { success : true }
 		}
 	},
@@ -46,5 +60,9 @@ export const actions: import('./$types').Actions = {
 		const username = data.get('username');
 		const password = data.get('password');
 		console.log('Logging in user: ' + username);
+	},
+
+	logout: async ({ locals }) => {
+		// TODO - logout logic
 	}
 };
