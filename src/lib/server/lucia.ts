@@ -1,8 +1,5 @@
-// npm add lucia-auth
 import { lucia } from 'lucia';
 import { sveltekit } from 'lucia/middleware';
-
-// npm add @lucia-auth/adapter-prisma
 import { prisma as prismaAdapter } from '@lucia-auth/adapter-prisma';
 import { prisma } from './prisma';
 import { dev } from '$app/environment';

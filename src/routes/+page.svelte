@@ -44,11 +44,21 @@
 		const res = await fetch('/api/questions');
 		const ret_data = await res.json();
 		// convert ret_data to iterable array
-		data = { questions: Object.keys(ret_data).map((key) => ret_data[key]) };
+		data.questions = Object.keys(ret_data).map((key) => ret_data[key]);
 	};
 </script>
 
 <main>
+	<div id="auth-sec">
+		<p>{data.userId} : {data.username}</p>
+		<form method="post" action="?/logout" use:enhance>
+			<input type="submit" value="Sign out" />
+		</form>
+		<form method="post" action="?/signin" use:enhance>
+			<input type="submit" value="Sign in" />
+		</form>
+	</div>
+
 	<button on:click={() => requestData()}> Request Data from GET endpoint </button>
 
 	<ul class='event_list'>
@@ -95,7 +105,7 @@
 		font-weight: 500;
 	}
 
-	input {
+	input[name="answer"] {
 		width: 200px; 	
 		height: 20px;
 		margin: 5px;
@@ -121,6 +131,24 @@
 
 		&:hover {
 			background-color: #e6e6e6;
+		}
+	}
+
+	#auth-sec {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		input[type="submit"] {
+			margin-left: 10px;
+			border-radius: 7px;
+			border: 1px solid #9e9e9e;
+			width: 75px;
+			height: 25px;
+
+			&:hover {
+				background-color: #e6e6e6;
+			}
 		}
 	}
 </style>

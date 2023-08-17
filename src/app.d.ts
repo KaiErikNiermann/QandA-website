@@ -25,7 +25,6 @@ declare global {
 		interface FieldError {
 			field: string | number;
 			message: string;
-			data: FormDataEntryValue;
 		}
 	}
 	var prisma: PrismaClient;

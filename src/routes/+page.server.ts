@@ -1,7 +1,9 @@
 import { client } from "$lib/db";
+import { auth } from "$lib/server/lucia";
+import { fail, redirect } from "@sveltejs/kit";
+import type { PageServerLoad, Actions } from "./$types";
 
-export async function load() {
-    console.log("Loading questions...");
+export const load: PageServerLoad = async ({ locals }) => {
     const data = await client.db("main_db").collection("QandA_collection").find(
             {},
             {
@@ -13,7 +15,17 @@ export async function load() {
         )
         .toArray();
 
+    const session = await locals.auth.validate();  
+    if (!session) {
+        return {
+            userId: null,
+            username: null,
+            questions: data,
+        }
+    }   
     return {
+        userId: session.user.userId,
+        username: session.user.username,
         questions: data,
     };
 }
@@ -41,5 +53,16 @@ export const actions: import("./$types").Actions = {
             }).catch((err) => {
                 console.log(err);
             });
+    },
+
+    logout: async ({ locals }) => {
+        const session = await locals.auth.validate();
+        if (!session) return fail(401, { message: "Not logged in" });
+        await auth.invalidateSession(session.sessionId);
+        locals.auth.setSession(null);
+        throw redirect(302, "/");
+    }, 
+    signin: async () => {
+        throw redirect(302, "/auth/");
     },
 };
