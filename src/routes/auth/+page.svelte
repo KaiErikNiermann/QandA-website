@@ -2,23 +2,19 @@
 	import { enhance } from '$app/forms';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
-	import { redirect } from '@sveltejs/kit';
 
 	let active = false;
 
 	$: type = active ? 'text' : 'password';
 
 	export let form;
-
 </script>
 
 <main>
 	<div id="error-sec">
 		{#if form?.errors}
 			{#each form.errors as error}
-				<p>
-					{error.field}: {error.message}
-				</p>
+				<p> {error.field}: {error.message} </p>
 			{/each}
 		{/if}
 	</div>
@@ -74,7 +70,7 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding-right: 3rem;
+		padding-right: 4rem;
 	}
 
 	.visbility-btn {

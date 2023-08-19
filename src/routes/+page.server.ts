@@ -40,14 +40,8 @@ export const actions: import("./$types").Actions = {
             .db("main_db")
             .collection("QandA_collection")
             .updateOne(
-                {
-                    question: data.get("question"),
-                },
-                {
-                    $set: {
-                        answer: answer,
-                    },
-                }
+                { question: data.get("question") },
+                { $set: { answer: `${answer}`, },     }
             ).then(() => {
                 console.log("Answer added!");
             }).catch((err) => {

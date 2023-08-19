@@ -14,6 +14,7 @@ declare global {
 		// interface Platform {}
 
 		interface Question {
+			user: string;
 			question: string;
 			answer: string;
 			status: number;
