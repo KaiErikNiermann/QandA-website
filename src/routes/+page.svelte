@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
+	import { mdsvex } from 'mdsvex';
 	import { onMount } from 'svelte';
 	import { enhance } from '$app/forms';
 	export let data;
@@ -17,15 +18,18 @@
 		if (webSocketEstablished) return;
 		const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 		ws = new WebSocket(`${protocol}//${window.location.host}/websocket`);
+		
 		ws.addEventListener('open', (event) => {
 			webSocketEstablished = true;
 			console.log('[websocket] connection open', event);
 			logEvent('[websocket] connection open');
 		});
+		
 		ws.addEventListener('close', (event) => {
 			console.log('[websocket] connection closed', event);
 			logEvent('[websocket] connection closed');
 		});
+		
 		ws.addEventListener('message', (event) => {
 			console.log('[websocket] message received', event);
 			logEvent(`[websocket] message received: ${event.data}`);
@@ -80,7 +84,7 @@
 				<form method="POST" action="?/add_answer" use:enhance>
 					<label>
 						your answer
-						<input name="answer" />
+						<InputBox />
 						<input type="hidden" name="question" value={question.question} />
 					</label>
 					<button type="submit">Submit</button>
