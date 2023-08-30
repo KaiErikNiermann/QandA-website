@@ -3,25 +3,50 @@
 	import { enhance } from '$app/forms';
 	import { mdsvex } from 'mdsvex';
 	import { compile } from 'mdsvex';
+	import { onMount } from 'svelte';
 
 	let active = false;
 	let inputValue = '';
 	let text = '';
-	let compiledHTML = ''; // Store compiled HTML
+	let compiledHTML = '';
 
 	function currInput(event: KeyboardEvent) {
 		inputValue = (event.target as HTMLInputElement).value;
 		text = inputValue;
+		console.log(text);
+		let form = document.getElementById('usrform') as HTMLFormElement;
+		form.requestSubmit(
+			document.getElementById('md-visibility') as HTMLButtonElement
+		);
 	}
 
-	$: mode = active ? 'md' : 'text';
+	onMount(() => {
+		let form = document.getElementById('usrform') as HTMLFormElement;
+		form.addEventListener('submit', (event) => {
+			event.preventDefault();
+			console.log(`Submitting \n${text}`);
 
-	export let form;
+			// POST to /compile
+			const res = fetch('/api/compile', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(text)
+			}).then((res) => {
+				return res.json();
+			}).then((data) => {
+				compiledHTML = data.data;
+			});
+		});
+	})
+
+	$: mode = active ? 'md' : 'text';
 </script>
 
+{@html compiledHTML}
 <span id="main-box">
-	{@html form?.data?.code}
-	<form method="POST" action="?/compile" id="usrform" use:enhance>
+	<form method="POST" action="/compile" id="usrform">
 		<textarea name="markdown" cols="50" rows="10" on:keyup={currInput}></textarea>
 		<button type="submit" id="md-visibility" on:click={() => (active = !active)}>
 			Toggle md
