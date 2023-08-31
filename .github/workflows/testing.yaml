@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci  
+          pnpm ci  
           npx playwright install
 
       - name: Setup environment variables

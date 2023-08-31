@@ -32,6 +32,7 @@ declare global {
 }
 
 declare global {
+	declare module "*.md";
 	namespace Lucia {
 		type Auth = import('$lib/server/lucia').Auth;
 		type DatabaseUserAttributes = {
@@ -41,5 +42,6 @@ declare global {
 		type DatabaseSessionAttributes = Record<string, never>;
 	}
 }
+
 
 export {};

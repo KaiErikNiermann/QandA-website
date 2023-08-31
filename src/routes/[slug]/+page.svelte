@@ -1,95 +1,144 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
-	import { enhance } from '$app/forms';
-	import { mdsvex } from 'mdsvex';
-	import { compile } from 'mdsvex';
 	import { onMount } from 'svelte';
 
 	let active = false;
 	let inputValue = '';
-	let text = '';
 	let compiledHTML = '';
 
 	function currInput(event: KeyboardEvent) {
-		inputValue = (event.target as HTMLInputElement).value;
-		text = inputValue;
-		console.log(text);
-		let form = document.getElementById('usrform') as HTMLFormElement;
-		form.requestSubmit(
-			document.getElementById('md-visibility') as HTMLButtonElement
-		);
+		inputValue = (event.target as HTMLDivElement)?.innerText; // Use innerText to get the text content of the contenteditable div
+		const textarea = document.getElementById('hidden') as HTMLTextAreaElement;
+		textarea.value = inputValue; // Update the textarea content
+		console.log(inputValue);
+		const form = document.getElementById('usrform') as HTMLFormElement;
+		form.requestSubmit(); // Submit the form
 	}
 
 	onMount(() => {
-		let form = document.getElementById('usrform') as HTMLFormElement;
-		form.addEventListener('submit', (event) => {
+		const form = document.getElementById('usrform') as HTMLFormElement;
+		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
-			console.log(`Submitting \n${text}`);
-
-			// POST to /compile
-			const res = fetch('/api/compile', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(text)
-			}).then((res) => {
-				return res.json();
-			}).then((data) => {
+			console.log(`Submitting \n${inputValue}`);
+			try {
+				const res = await fetch('/api/compile', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(inputValue) // Send text as an object property
+				});
+				const data = await res.json();
 				compiledHTML = data.data;
-			});
+			} catch (error) {
+				console.error('Error:', error);
+			}
 		});
-	})
+	});
 
+	export let data;
 	$: mode = active ? 'md' : 'text';
 </script>
 
-<span id="main-box">
-	<form method="POST" action="/compile" id="usrform">
-		<button type="submit" id="md-visibility" on:click={() => (active = !active)}>
-			Toggle live preview
-		</button>
-		<textarea name="markdown" cols="50" rows="10" on:keyup={currInput}></textarea>
-		{#if active}
+<main id="main-box">
+	<div id="content-container">
+		<div id="input-group">
+			<form method="POST" action="/compile" id="usrform">
+				<button type="submit" id="md-visibility" on:click={() => (active = !active)}>
+					Toggle live preview
+				</button>
+				<div
+					role="textbox"
+					id="submit-sec"
+					tabindex="0"
+					contenteditable="true"
+					on:keyup={currInput}
+				/>
+				<textarea id="hidden" name="markdown" cols="50" rows="10" />
+			</form>
 			<div id="live-preview">
-				{@html compiledHTML}
-			</div>	
-		{:else}
-			<div id="live-preview">
-				<p>Live preview is disabled</p>
+				{#if active}
+					{@html compiledHTML}
+				{:else}
+					{@html '<p>Live preview is disabled</p>'}
+				{/if}
 			</div>
-		{/if}
-	</form>
-</span>
+		</div>
+		<div id="comment-group">
+			<svelte:component this={data.foo} />
+		</div>
+	</div>
+</main>
 
 <style lang="scss">
 	#main-box {
+		font-size: small;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		@include debug_border;
+
+		#content-container {
+			display: grid;
+			justify-content: space-evenly;
+			grid-template-columns: 1fr 1fr; 
+			width: 100%; 
+		}
+
+		#input-group {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 50vw;
+			height: fit-content;
+		}
+
+		#comment-group {
+			@include debug_border;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: 10px;
+			margin: 10px;
+		}
+
 		form {
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			justify-content: center;
 
 			button {
-				border-radius: 7px;
-				border: 1px solid #9e9e9e;
+				@include debug_border;
 				width: fit-content;
 				height: 25px;
+				margin: 10px;
+				margin-bottom: 0px;
 
 				&:hover {
 					background-color: #e6e6e6;
 				}
 			}
 
-			textarea {
-				margin-top: 10px;
-				border-radius: 7px;
-				border: 1px solid #9e9e9e;
+			div[contenteditable='true'] {
+				@include debug_border;
+				width: 500px;
+				height: 150px;
+				padding: 10px;
+				margin: 10px;
+				overflow-y: scroll;
 			}
 
-			div#live-preview {
-				width: 350px;
-				
+			textarea {
+				display: none;
 			}
+		}
+
+		div#live-preview {
+			@include debug_border;
+			width: 500px;
+			padding: 10px;
+			margin: 10px;
 		}
 	}
 </style>
