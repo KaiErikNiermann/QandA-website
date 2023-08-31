@@ -44,40 +44,52 @@
 	$: mode = active ? 'md' : 'text';
 </script>
 
-{@html compiledHTML}
 <span id="main-box">
 	<form method="POST" action="/compile" id="usrform">
-		<textarea name="markdown" cols="50" rows="10" on:keyup={currInput}></textarea>
 		<button type="submit" id="md-visibility" on:click={() => (active = !active)}>
-			Toggle md
+			Toggle live preview
 		</button>
+		<textarea name="markdown" cols="50" rows="10" on:keyup={currInput}></textarea>
+		{#if active}
+			<div id="live-preview">
+				{@html compiledHTML}
+			</div>	
+		{:else}
+			<div id="live-preview">
+				<p>Live preview is disabled</p>
+			</div>
+		{/if}
 	</form>
 </span>
 
 <style lang="scss">
 	#main-box {
-		display: flex;
-		flex-direction: column;
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 
-		button {
-			border-radius: 7px;
-			border: 1px solid #9e9e9e;
-			width: 100px;
-			height: 25px;
+			button {
+				border-radius: 7px;
+				border: 1px solid #9e9e9e;
+				width: fit-content;
+				height: 25px;
 
-			&:hover {
-				background-color: #e6e6e6;
+				&:hover {
+					background-color: #e6e6e6;
+				}
 			}
-		}
 
-		#input-sec {
-			width: 400px;
-		}
+			textarea {
+				margin-top: 10px;
+				border-radius: 7px;
+				border: 1px solid #9e9e9e;
+			}
 
-		textarea {
-			margin-top: 10px;
-			border-radius: 7px;
-			border: 1px solid #9e9e9e;
+			div#live-preview {
+				width: 350px;
+				
+			}
 		}
 	}
 </style>
