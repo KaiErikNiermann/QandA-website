@@ -82,8 +82,8 @@
 		#content-container {
 			display: grid;
 			justify-content: space-evenly;
-			grid-template-columns: 1fr 1fr; 
-			width: 100%; 
+			grid-template-columns: 1fr 1fr;
+			width: 100%;
 		}
 
 		#input-group {
