@@ -8,8 +8,36 @@ This is a frontend to users who want to answer questions which discord users ask
 
 Currently this is still in very early development and likely very buggy, if you wish to contribute feel free to but I do not advise trying to host this yourself.
 
-- Real-time updates and interactions
-- Minimal UI which renders questions and answers
+### Backend
+
+- [x] Basic authentication
+  - [ ] Email verification
+- [x] Real time updates using changestreams and websockets
+- [x] Basic data passing with bot
+  - [ ] Improved data passing for markdown
+  - [ ] Endpoint for getting posts by `guildId`, `messageId`
+
+### Frontend
+
+- [x] Basic Homepage
+  - [ ] Cleanup
+- [x] Basic Auth page
+  - [ ] Email verification additions
+  - [ ] Cleanup
+- [ ] Post page ( halfway there )
+  - [ ] Cleanup
+  
+### Hosting and Deployment
+
+- [ ] IAC solution using Terraform / Ansible
+- [ ] GitHub action
+  - [x] Basic testing
+  - [ ] Full testing
+  - [ ] Deployment
+- [ ] Hosting setup
+  - [x] Basic web server
+  - [ ] Web server fully integrated
+  - [ ] Better separation between dev and prod
 
 ## References
 

@@ -1,12 +1,24 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { client } from '$lib/db';
+import { db } from '../../../hooks.server';
+
+export const POST = (async ({ request }) => {
+	const data = JSON.parse(await request.text());
+	const server_questions = db.find({
+		guild_id: data.guild_id
+	}, {
+		limit: 100, 
+		projection: {
+			_id: 0
+		}
+	}).toArray();
+
+	return json(server_questions);
+}) satisfies RequestHandler;
 
 export const GET = (async ({ locals }) => {
-	const data = await client
-		.db('main_db')
-		.collection('QandA_collection')
-		.find(
+	const data = await db.find(
 			{},
 			{
 				limit: 1000,

@@ -17,6 +17,8 @@ connect()
 		console.error('Failed to connect to database', err);
 	});
 
+export const db = client.db('main_db').collection('QandA_collection');
+
 // Initialize WebSocket server
 let wssInitialized = false;
 
