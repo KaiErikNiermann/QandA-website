@@ -1,11 +1,9 @@
 import { error } from '@sveltejs/kit'
-import type Module from 'module';
+import { db } from '../../hooks.server.js';
 
-export async function load({ params }) {
-    const post = await import("./placeholder.md");
-    console.log(post);
-
+export async function load({ data }) {
+    
     return {
-        foo: post.default
+        data: data
     }
 }

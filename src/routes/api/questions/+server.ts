@@ -5,6 +5,7 @@ import { db } from '../../../hooks.server';
 
 export const POST = (async ({ request }) => {
 	const data = JSON.parse(await request.text());
+	console.log(data);
 	const server_questions = db.find({
 		guild_id: data.guild_id
 	}, {
@@ -14,6 +15,7 @@ export const POST = (async ({ request }) => {
 		}
 	}).toArray();
 
+	console.log(server_questions);
 	return json(server_questions);
 }) satisfies RequestHandler;
 
