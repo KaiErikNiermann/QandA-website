@@ -15,16 +15,17 @@ Currently this is still in very early development and likely very buggy, if you 
 - [x] Real time updates using changestreams and websockets
 - [x] Basic data passing with bot
   - [ ] Improved data passing for markdown
-  - [ ] Endpoint for getting posts by `guildId`, `messageId`
+  - [x] Endpoint for getting posts by `guildId`, `messageId`
 
 ### Frontend
 
 - [x] Basic Homepage
   - [ ] Cleanup
 - [x] Basic Auth page
+  - [ ] Discord OAuth
   - [ ] Email verification additions
   - [ ] Cleanup
-- [ ] Post page ( halfway there )
+- [x] Post page
   - [ ] Cleanup
   
 ### Hosting and Deployment

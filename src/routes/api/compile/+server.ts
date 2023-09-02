@@ -3,7 +3,7 @@ import { json } from '@sveltejs/kit';
 import { mdsvex } from 'mdsvex';
 import { writeFile } from 'fs';
 
-export const POST = async ({ request: request }) => {
+export const POST = async ({ request }) => {
 	const options: MdsvexCompileOptions = {
 		extensions: ['.svelte.md', '.md', '.svx'],
 		smartypants: {

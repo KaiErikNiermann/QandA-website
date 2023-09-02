@@ -1,7 +1,9 @@
 export async function load({ parent, data }) {
     await parent();
     const id = data.id;
-    const question = await import(`../../../questions/${id}.md`);
+    const fp = `../../../questions/${id}.md`
+    const question = await import(fp);
+    
     return {
         data: question.default
     }

@@ -3,6 +3,25 @@ import type { RequestHandler } from './$types';
 import { client } from '$lib/db';
 import { db } from '../../../hooks.server';
 
+export const POST = (async ({ request: request }) => {
+	console.log('POST request received!');
+	const guild_id = JSON.parse(await request.text());
+
+	const questions = await db
+		.find(
+			{ guild_id: guild_id },
+			{
+				limit: 100,
+				projection: {
+					_id: 0
+				}
+			}
+		)
+		.toArray();
+
+	return json(questions);
+});
+
 export const GET = (async ({ locals }) => {
 	const data = await db.find(
 			{},
