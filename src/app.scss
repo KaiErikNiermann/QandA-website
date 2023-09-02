@@ -1,14 +1,14 @@
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
-@import "../node_modules/inter-ui/inter.css";
-@import "./styles/prism-one-light.css";
+@import '../node_modules/inter-ui/inter.css';
+@import './styles/prism-one-light.css';
 
 * {
-    background-color: white;
-    font-family: 'Inter', sans-serif;
-    word-break: break-all;
+	background-color: white;
+	font-family: 'Inter', sans-serif;
+	word-break: break-all;
 }
 
 input {
-    border: 1px solid #ccc;
-    border-radius: 7px;
+	border: 1px solid #ccc;
+	border-radius: 7px;
 }

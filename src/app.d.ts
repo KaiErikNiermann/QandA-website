@@ -1,16 +1,16 @@
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient } from '@prisma/client';
 
 declare global {
 	namespace App {
 		// interface Error {}
-		
+
 		interface Locals {
 			wss?: ExtendedWebSocketServer;
 			auth: import('lucia').AuthRequest;
 		}
-		
+
 		// interface PageData {}
-		
+
 		// interface Platform {}
 
 		interface Question {
@@ -32,16 +32,15 @@ declare global {
 }
 
 declare global {
-	declare module "*.md";
+	declare module '*.md';
 	namespace Lucia {
 		type Auth = import('$lib/server/lucia').Auth;
 		type DatabaseUserAttributes = {
-			username: string; 
-			email: string; 
-		}
+			username: string;
+			email: string;
+		};
 		type DatabaseSessionAttributes = Record<string, never>;
 	}
 }
-
 
 export {};

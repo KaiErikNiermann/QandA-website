@@ -37,7 +37,7 @@ export const createWSSGlobalInstance = () => {
 	// @ts-ignore
 	const wss = new WebSocketServer({ noServer: true }) as ExtendedWebSocketServer;
 
-    // store the WebSocketServer instance on the global object
+	// store the WebSocketServer instance on the global object
 	(globalThis as ExtendedGlobal)[GlobalThisWSS] = wss;
 
 	wss.on('connection', (ws) => {
@@ -49,5 +49,5 @@ export const createWSSGlobalInstance = () => {
 		});
 	});
 
-    return wss;
+	return wss;
 };

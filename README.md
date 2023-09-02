@@ -27,7 +27,7 @@ Currently this is still in very early development and likely very buggy, if you 
   - [ ] Cleanup
 - [x] Post page
   - [ ] Cleanup
-  
+
 ### Hosting and Deployment
 
 - [ ] IAC solution using Terraform / Ansible

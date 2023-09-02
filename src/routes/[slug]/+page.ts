@@ -7,7 +7,7 @@ export async function load({ params, parent, data }) {
 	let { slug: slug, data: links } = data;
 
 	return {
-        slug: slug,
+		slug: slug,
 		links: links
 	};
 }

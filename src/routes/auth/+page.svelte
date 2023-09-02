@@ -14,7 +14,7 @@
 	<div id="error-sec">
 		{#if form?.errors}
 			{#each form.errors as error}
-				<p> {error.field}: {error.message} </p>
+				<p>{error.field}: {error.message}</p>
 			{/each}
 		{/if}
 	</div>

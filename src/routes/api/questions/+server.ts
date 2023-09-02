@@ -1,9 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { client } from '$lib/db';
 import { db } from '../../../hooks.server';
 
-export const POST = (async ({ request: request }) => {
+export const POST = async ({ request: request }) => {
 	console.log('POST request received!');
 	const guild_id = JSON.parse(await request.text());
 
@@ -20,10 +19,11 @@ export const POST = (async ({ request: request }) => {
 		.toArray();
 
 	return json(questions);
-});
+};
 
 export const GET = (async ({ locals }) => {
-	const data = await db.find(
+	const data = await db
+		.find(
 			{},
 			{
 				limit: 1000,

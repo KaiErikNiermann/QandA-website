@@ -19,12 +19,12 @@ export async function load({ params: params }) {
 		)
 		.toArray();
 
-    const links = questions.map(question => {
-        return question.message_id
-    })
+	const links = questions.map((question) => {
+		return question.message_id;
+	});
 
-    return {
-        slug: params.slug,
-        data: links
-    }
+	return {
+		slug: params.slug,
+		data: links
+	};
 }

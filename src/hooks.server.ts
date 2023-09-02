@@ -31,14 +31,14 @@ const startupWebsocketServer = () => {
 		wss.on('connection', (ws) => {
 			console.log(`WebSocket client connection established - ${ws.socketId}`);
 			ws.send(`Hello from SvelteKit!`);
-			
-            client
+
+			client
 				.db('main_db')
 				.collection('QandA_collection')
 				.watch([], { fullDocument: 'updateLookup' })
 				.on('change', (change) => {
-                    ws.send('invalidate')
-                });
+					ws.send('invalidate');
+				});
 
 			ws.on('close', () => {
 				console.log(`WebSocket client connection closed - ${ws.socketId}`);
@@ -63,5 +63,5 @@ export const handle = (async ({ event, resolve }) => {
 
 	return await resolve(event, {
 		filterSerializedResponseHeaders: (name) => name === 'content-type'
-	});;
+	});
 }) satisfies Handle;

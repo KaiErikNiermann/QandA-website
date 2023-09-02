@@ -1,7 +1,5 @@
 import { compile, type MdsvexCompileOptions } from 'mdsvex';
 import { json } from '@sveltejs/kit';
-import { mdsvex } from 'mdsvex';
-import { writeFile } from 'fs';
 
 export const POST = async ({ request }) => {
 	const options: MdsvexCompileOptions = {
@@ -16,8 +14,10 @@ export const POST = async ({ request }) => {
 
 	const markdown: string = JSON.parse(await request.text()).replace('\\n', '\n');
 
-    const stuff = await mdsvex(options).markup({ content: markdown, filename: 'test.md' });
-    console.log(stuff);
+	/**
+	 * Alternative approach, might be good to use if other options are needed
+	 */
+	// const stuff = await mdsvex(options).markup({ content: markdown, filename: 'test.md' });
 
 	const compiled = await compile(`${markdown}`, options);
 
@@ -37,6 +37,6 @@ export const POST = async ({ request }) => {
 					margin: 10px;
 				}
 			</style>`
-		)
+		);
 	return json({ data: html }, { status: 201 });
 };

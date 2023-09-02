@@ -102,7 +102,7 @@ export const actions: import('./$types').Actions = {
 			const session = await auth.createSession({
 				userId: key.userId,
 				attributes: {}
-			}); 
+			});
 			locals.auth.setSession(session);
 		} catch (e) {
 			if (
@@ -110,16 +110,14 @@ export const actions: import('./$types').Actions = {
 				(e.message === 'AUTH_INVALID_KEY_ID' || e.message === 'AUTH_INVALID_PASSWORD')
 			) {
 				return fail(400, {
-					errors : [
+					errors: [
 						{ field: 'username', message: 'Invalid username or password' },
 						{ field: 'password', message: 'Invalid username or password' }
 					]
 				});
 			}
 			return fail(500, {
-				errors: [ 
-					{ field: 'username', message: 'Unknown error' },
-				]
+				errors: [{ field: 'username', message: 'Unknown error' }]
 			});
 		}
 	},

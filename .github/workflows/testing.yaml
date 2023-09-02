@@ -3,10 +3,10 @@ name: Build and Run tests
 on:
   push:
     branches:
-      - main  # Trigger the workflow on push to the main branch
+      - main # Trigger the workflow on push to the main branch
   pull_request:
     branches:
-      - main  # Trigger the workflow on pull requests to the main branch
+      - main # Trigger the workflow on pull requests to the main branch
 
 jobs:
   build:
@@ -28,7 +28,7 @@ jobs:
           npx playwright install
 
       - name: Setup environment variables
-        run: | 
+        run: |
           touch .env
           echo "DATABASE_URL=${{ secrets.DB_URI }}" >> .env
 
