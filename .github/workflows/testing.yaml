@@ -21,16 +21,16 @@ jobs:
         with:
           node-version: 18
 
-      - name: DB setup
-        run: | 
-          npm run prisma:push
-          npm run prisma:generate
-
       - name: Install dependencies
         run: |
           npm install pnpm -g
           pnpm i  
           npx playwright install
+
+      - name: DB setup
+        run: | 
+          npm run prisma:push
+          npm run prisma:generate
 
       - name: Setup environment variables
         run: |
