@@ -18,7 +18,6 @@ export const POST = async ({ request }) => {
 	 * Alternative approach, might be good to use if other options are needed
 	 */
 	// const stuff = await mdsvex(options).markup({ content: markdown, filename: 'test.md' });
-
 	const compiled = await compile(`${markdown}`, options);
 
 	/**

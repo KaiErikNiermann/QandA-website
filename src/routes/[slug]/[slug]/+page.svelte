@@ -35,7 +35,8 @@
 		});
 	});
 
-	export let data;
+	export let data;	
+	console.log(data.data);
 	$: mode = active ? 'md' : 'text';
 </script>
 

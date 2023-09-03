@@ -5,20 +5,20 @@ export async function load({ params: params }) {
 	const message_id = params.slug;
 
 	const question = await db.findOne({ message_id: message_id });
+	const answers_arr: string[] = question?.answers;
+	const answers_iter = answers_arr.entries();
 
-	console.log(question);
+	const r = Array.from(answers_iter).map(([idx, answer]) => {
+		return `---\n## answer ${idx + 1}\n${answer}`
+	});
 
 	const file_contents = [
 		`${question?.question}`,
 		``,
-		question?.answers.map((answer: string) => {
-			return `### answer ${1}\n${answer}`;
-		})
+		r
 	].join('\n');
 
-	console.log(file_contents);
-
-	writeFile(`src/questions/${question?.message_id}.md`, question?.question, (err) => {
+	writeFile(`src/questions/${question?.message_id}.md`, file_contents, (err) => {
 		if (err) throw err;
 		console.log('The file has been saved!');
 	});

@@ -87,6 +87,7 @@ pre[class*='language-'] {
 .token.doctype,
 .token.punctuation,
 .token.entity {
+	background: hsl(230, 1%, 98%);
 	color: hsl(230, 8%, 24%);
 }
 
@@ -101,6 +102,7 @@ pre[class*='language-'] {
 
 .token.keyword {
 	color: hsl(301, 63%, 40%);
+	background: hsl(230, 1%, 98%);
 }
 
 .token.property,
@@ -119,6 +121,7 @@ pre[class*='language-'] {
 .token.regex,
 .token.attr-value,
 .token.attr-value > .token.punctuation {
+	background: hsl(230, 1%, 98%);
 	color: hsl(119, 34%, 47%);
 }
 
