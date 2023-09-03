@@ -26,17 +26,16 @@ jobs:
           npm install pnpm -g
           pnpm i  
           npx playwright install
-
-      - name: DB setup
-        run: | 
-          npm run prisma:push
-          npm run prisma:generate
-
+        
       - name: Setup environment variables
         run: |
           touch .env
           echo "DATABASE_URL=${{ secrets.DB_URI }}" >> .env
           echo "DBURL_PRISMA=${{ secrets.AUTH_DB_URL }}" >> .env 
-
+          
+      - name: DB setup
+        run: | 
+          npm run prisma:push
+          npm run prisma:generate
       - name: Build and run
         run: npm run test
