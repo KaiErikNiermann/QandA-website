@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install pnpm -g
-          pnpm ci  
+          pnpm i  
           npx playwright install
 
       - name: Setup environment variables
