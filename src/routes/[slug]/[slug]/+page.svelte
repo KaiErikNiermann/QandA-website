@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import * as querystring from 'querystring';
 
 	let active = false;
 	let inputValue = '';
 	let compiledHTML = '';
+	let webSocketEstablished = false;
+	let ws: WebSocket | null = null;
 
 	function currInput(event: KeyboardEvent) {
 		inputValue = (event.target as HTMLDivElement)?.innerText; // Use innerText to get the text content of the contenteditable div
@@ -14,7 +17,29 @@
 		form.requestSubmit(); // Submit the form
 	}
 
+	function enable_ws() {
+		if (webSocketEstablished) {
+			console.log('websocket already established');
+			return;
+		}
+		const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+		ws = new WebSocket(`${protocol}//${window.location.host}/websocket`);
+
+		ws.addEventListener('message', (event) => {
+			console.log('[websocket] message received', event);
+			if (event.data === 'invalidate') {
+				console.log('invalidating');
+				get_question();
+			}
+		});
+	}
+
+	async function get_question() {
+		
+	}
+
 	onMount(() => {
+		enable_ws();
 		const form = document.getElementById('usrform') as HTMLFormElement;
 		form.addEventListener('submit', async (event) => {
 			event.preventDefault();

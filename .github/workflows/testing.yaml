@@ -37,5 +37,6 @@ jobs:
         run: | 
           npm run prisma:push
           npm run prisma:generate
+          
       - name: Build and run
         run: npm run test
