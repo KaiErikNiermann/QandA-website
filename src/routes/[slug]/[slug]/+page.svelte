@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import type { HTMLAttributes } from 'svelte/elements.js';
 	import * as querystring from 'querystring';
+
+	// change type of contenteditable to string 
+	type ContentEditable = HTMLAttributes<HTMLDivElement> & {
+		contenteditable?: string | 'inherit' | undefined | null;
+	};
 
 	let active = false;
 	let inputValue = '';
@@ -76,7 +82,7 @@
 					role="textbox"
 					id="submit-sec"
 					tabindex="0"
-					contenteditable="true"
+					contenteditable='plaintext-only'
 					on:keyup={currInput}
 				/>
 				<textarea id="hidden" name="markdown" cols="50" rows="10" />
@@ -146,7 +152,7 @@
 				}
 			}
 
-			div[contenteditable='true'] {
+			div#submit-sec {
 				@include debug_border;
 				width: 500px;
 				height: 150px;
@@ -196,7 +202,7 @@
 				}
 
 				#submit-sec {
-					width: 100%;
+					width: 100% !important;
 				}
 
 				#live-preview {
