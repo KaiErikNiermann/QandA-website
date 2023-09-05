@@ -107,7 +107,7 @@
 
 		#content-container {
 			display: grid;
-			justify-content: space-evenly;
+			justify-content: space-evenly;			
 			grid-template-columns: 1fr 1fr;
 			width: 100%;
 		}
@@ -165,6 +165,55 @@
 			width: 500px;
 			padding: 10px;
 			margin: 10px;
+		}
+
+		@media screen and (max-width: 1070px) {
+			#content-container {
+				grid-template-columns: 1fr;
+			}
+
+			#input-group {
+				width: 100%;
+			}
+
+			@media screen and (max-width: 600px) {
+				#content-container {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+				}
+
+				#usrform {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					width: 100%;
+					margin: 0;
+					border: 0;
+					padding: 0; 
+				}
+
+				#submit-sec {
+					width: 100%;
+				}
+
+				#live-preview {
+					margin: 0 !important;
+					padding: 0 !important;
+					border: 0 !important;
+					width: 100% !important;
+				}
+
+				#input-group {
+					width: 100%;
+				}
+
+				#comment-group {
+					width: 100%;
+				}
+			}
 		}
 	}
 </style>
